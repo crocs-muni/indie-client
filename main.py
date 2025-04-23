@@ -64,8 +64,7 @@ def register_oidc_client_service(
         data=client_metadata,
         allow_redirects=True,
     )
-    print(resp.status_code)
-    return resp.json()
+    return resp.status_code
 
 
 def get_oidc_registered_clients(username: str) -> List:
@@ -128,7 +127,8 @@ def get_zkLogin_client(username: str) -> Mapping:
             return client
 
     # creat the client and now return as it is expected to have been created
-    clients = register_oidc_client_service(username, zkLogin_client_metadata)
+    register_oidc_client_service(username, zkLogin_client_metadata)
+    clients = get_oidc_registered_clients(username)
     for client in clients:
         if client["metadata"]["client_name"] == zkLogin_client_name:
             return client
