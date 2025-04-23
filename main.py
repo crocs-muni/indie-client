@@ -173,14 +173,11 @@ def get_encrypted_salt(token) -> bytes:
     proto.start_handshake()
 
     ciphertext = proto.write_message(token)
-    # print("eph", eph_pubkey_bytes.hex())
-    # print("ct", ct.hex())
 
     resp = requests.post(
         f"{SALT_SERVICE_URL}/get-salt-e2e", data={"payload": ciphertext.hex()}
     )
     enc_salt = resp.json()["enc-salt"]
-    # print(f"Encrypted salt: {enc_salt}")
     salt = proto.read_message(bytes.fromhex(enc_salt))
     return {"salt": salt.hex()}
 
