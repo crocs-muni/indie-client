@@ -1,0 +1,4 @@
+requests
+noiseprotocol
+pyjwt
+cryptography
